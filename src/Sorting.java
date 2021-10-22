@@ -243,43 +243,50 @@ public class Sorting {
         }
     }
     public static void merge(int[] list,int startPoint,int midPoint,int endPoint){
-        //create a temporary array
-        int[] temp = new int[endPoint-startPoint+1];
-        int i= startPoint;
-        int j= midPoint + 1;
-        int k = 0;
-        // traverse both arrays and in each iteration add smaller of both elements in temp
-        while(i<midPoint&&j<=endPoint){
-            if (list[i]<=list[j]){
-                temp[k] = list[i];
-                k += 1;
-                i += 1;
-            }else{
-                temp[k] = list[j];
-                k += 1;
-                j += 1;
-
-            }
-        }//add elements left in the first interval
-        while(i<=midPoint){
-            temp[k]=list[i];
-            k += 1;
-            i += 1;
+        //create temporary arrays
+        int n1 = midPoint-startPoint+1;
+        int n2 = endPoint - midPoint;
+        int[] temp = new int[n1];
+        int[] tempRight = new int[n2];
+        //copy data into temporary arrays
+        for(int i = 0;i < n1;++i) {
+            temp[i]=list[startPoint + i];
         }
-        //add elements left in the second interval
-        while(j<=endPoint){
-            temp[k]=list[j];
-            k += 1;
-            j += 1;
-        }for (i=startPoint;i<=endPoint;i++){
-            list[i]=temp[i-startPoint];
+        for (int j = 0; j < n2; ++j) {
+            tempRight[j]=list[midPoint + 1 + j];
+        }
+        int i= 0;
+        int j= 0;
+        // Initial index of merged subarray array
+        int k = startPoint;
+        while(i<n1 && j<n2){
+            if (temp[i]<=tempRight[j]){
+                list[k] = temp[i];
+                i++;
+            }else{
+                list[k] = tempRight[j];
+                j++;
+            }
+            k++;
+        }
+        /* Copy remaining elements of temp[] if any */
+        while(i<n1){
+            list[k]=tempRight[i];
+            i++;
+            k++;
+        }
+        /* Copy remaining elements of tempRight[] if any */
+        while(j<=n2){
+            list[k]=tempRight[j];
+            j++;
+            k++;
         }
     }
     public static void mergeSort(int[] list1,int start,int end){
         if(start<end){
-            int mid = (start + end)/2;
+            int mid = start + (end - start)/2;
+            mergeSort(list1, start, mid);
             mergeSort(list1, mid + 1, end);
-            mergeSort(list1, start, end);
             merge(list1,start,mid,end);
         }
     }

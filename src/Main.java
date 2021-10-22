@@ -71,7 +71,6 @@ public class Main {
             int[] list= new int[n];
             //Receive inputs from the user to populate the array
             intInputs(num,list);
-
             //select a searching or sorting algorithm
             input = optionPane(num);
 
@@ -372,7 +371,6 @@ public class Main {
         }
     }
     //this method allows the user to recursively select and implement either a searching or sorting algorithm for int values until the user opt to stop the program.
-
     public static void MenuForInt(int input, int[] list) {
         //select a searching algorithm to use
         if (input == 1) {
